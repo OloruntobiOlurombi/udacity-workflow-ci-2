@@ -35,8 +35,18 @@ jobs:
       - checkout 
       - run: 
           name: "Say World"
-          command: "echo World"          
+          command: "echo World"  
 
+  print_my_name_var: 
+    docker: 
+      - image: cimg/node:18.4.0 
+
+    steps: 
+      - checkout 
+      - run: 
+          name: "echo an env var that is part of our project"                  
+          command: |
+            echo $MY_ENV_VAR
 workflows:
   # Below is the definition of your workflow.
   # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
