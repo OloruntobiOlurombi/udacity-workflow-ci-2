@@ -47,6 +47,18 @@ jobs:
           name: "echo an env var that is part of our project"                  
           command: |
             echo $MY_ENV_VAR
+
+  print_repro_url:
+    docker:
+      - image: cimg/node:18.4.0
+
+    steps: 
+      - checkout 
+      - run: 
+          name: "Repro URL"
+          command: | 
+            echo $CIRCLE_REPOSITORY_URL  
+
 workflows:
   # Below is the definition of your workflow.
   # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
@@ -58,4 +70,9 @@ workflows:
       - print_world: 
           requires: 
             - print_hello   
-      - print_my_name_var      
+      - print_my_name_var  
+          requires: 
+            - print_world  
+      - print_repro_url
+          requires:
+            - print_my_name_var       
